@@ -8,27 +8,50 @@ let pattern = 0; // use to store pattern initialize number for the boss
 // Time Variable for Timer countdown
 let time = 0; 
 let seconds = 0;
+let currentFrame = 0;
+
+// Array holding Idle animation 
+let idleSakuya = [];
+
+function preload() {
+  for (i = 1; i <= 6; i++) {
+    idleSakuya[i-1] = loadImage("assets/Sakuya-Idle" + i + ".png");
+  }
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  
 }
 
 function draw() {
   background(220);
-  noStroke();
-  fill(0);
-  textSize(40);
-  CountDown();
+  // Sakuya Animation and Moving Animation
+  image(idleSakuya[currentFrame], width/2, height/2,80, 160);
+
+  if (frameCount % 12 === 0) {
+    currentFrame++;
+  }
+  
+  if (currentFrame > 5) {
+    currentFrame = 0;
+  }
+
+  // 
+  // noStroke();
+  // fill(0);
+  // textSize(40);
+  // CountDown();
 }
 
-function CountDown() {
-  let milliseconds = millis(); // millis() return the milliseconds 
-  seconds = milliseconds / 1000;
-  time = 150 - seconds;
+// function CountDown() {
+//   let milliseconds = millis(); // millis() return the milliseconds 
+//   seconds = milliseconds / 1000;
+//   time = 150 - seconds;
 
-  text(int(time), width/2, length/2);
-}
+//   text(int(time), width/2, length/2);
+// }
 
-function Reimu() {
+// function Reimu() {
 
-}
+// }
