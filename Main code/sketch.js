@@ -2,20 +2,22 @@
 // Henry Vu
 // 11.28.2024
 
-let totalpoint; // use to store total point
-let pattern = 0; // use to store pattern initialize number for the boss 
+let start = false;
 
-// Time Variable for Timer countdown
-let time = 0; 
-let seconds = 0;
+let pattern = 0; // use to store pattern initialize number for the boss 
+let bg;
 let currentFrame = 0;
 
-// Array holding Idle animation 
+
+// Array holding Idle and Moving animation for Sakuya
 let idleSakuya = [];
+let movingSakuya = [];
 
 function preload() {
+  bg = loadImage("assets/background/mansion-battle.gif");
   for (i = 1; i <= 6; i++) {
-    idleSakuya[i-1] = loadImage("assets/Sakuya-Idle" + i + ".png");
+    idleSakuya[i-1] = loadImage("assets/sakuyaAnimation/Sakuya-Idle" + i + ".png");
+
   }
 }
 
@@ -24,10 +26,9 @@ function setup() {
   
 }
 
-function draw() {
-  background(220);
-  // Sakuya Animation and Moving Animation
-  image(idleSakuya[currentFrame], width/2, height/2,80, 160);
+function SpawnSakuya() {
+  // Sakuya Idle Animation and Moving Animation
+  image(idleSakuya[currentFrame], width*3/4, height*2/5,80, 160);
 
   if (frameCount % 12 === 0) {
     currentFrame++;
@@ -37,20 +38,14 @@ function draw() {
     currentFrame = 0;
   }
 
-  // 
-  // noStroke();
-  // fill(0);
-  // textSize(40);
-  // CountDown();
 }
 
-// function CountDown() {
-//   let milliseconds = millis(); // millis() return the milliseconds 
-//   seconds = milliseconds / 1000;
-//   time = 150 - seconds;
+function draw() {
+  background(bg);
+  SpawnSakuya();
+  
 
-//   text(int(time), width/2, length/2);
-// }
+}
 
 // function Reimu() {
 
