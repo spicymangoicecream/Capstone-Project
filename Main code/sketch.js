@@ -8,27 +8,37 @@ let pattern = 0; // use to store pattern initialize number for the boss
 let bg;
 let currentFrame = 0;
 
+let eneposX, eneposY;
 
 // Array holding Idle and Moving animation for Sakuya
 let idleSakuya = [];
-let movingSakuya = [];
+let attackSakuya = [];
 
 function preload() {
   bg = loadImage("assets/background/mansion-battle.gif");
   for (i = 1; i <= 6; i++) {
     idleSakuya[i-1] = loadImage("assets/sakuyaAnimation/Sakuya-Idle" + i + ".png");
+  }
 
+  // Load Attack Animation 
+  for (i = 1; i <=7; i++) {
+    attackSakuya[i-1] = loadImage("assets/sakuyaNormal/sakuyaAtk" + i + ".png");
   }
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  
+  createCanvas(windowWidth, 1000);
+  eneposX = width*3/4;
+  eneposY = height*2/5;
 }
 
+// class Bullet {
+//   constructor(x, y)
+// }
+
 function SpawnSakuya() {
-  // Sakuya Idle Animation and Moving Animation
-  image(idleSakuya[currentFrame], width*3/4, height*2/5,80, 160);
+  // Sakuya Idle Animation
+  image(idleSakuya[currentFrame], eneposX, eneposY,80, 160);
 
   if (frameCount % 12 === 0) {
     currentFrame++;
@@ -38,6 +48,37 @@ function SpawnSakuya() {
     currentFrame = 0;
   }
 
+  // Random Sakuya moving pattern
+  let choice = int(random(5)); // randomize moving
+
+  if(choice === 0) { // stay still
+    eneposX = eneposX;
+    eneposY = eneposY;
+  }
+
+  if (choice === 1) { // moving forward
+    eneposX = eneposX - 0.4;
+    eneposX = constrain(eneposX, width*0.6, width*0.9);
+  }
+
+  if (choice === 2) { // moving backward
+    eneposX = eneposX + 0.4;
+    eneposX = constrain(eneposX, width*0.6, width*0.9);
+  }
+
+  if (choice === 3) { // moving up
+    eneposY = eneposY - 0.5;
+    eneposY = constrain(eneposY, height*0.2, height*0.5);
+  }
+
+  if (choice === 4) { // moving down
+    eneposY = eneposY + 0.5;
+    eneposY = constrain(eneposY, height*0.2, height*0.5);
+  }
+}
+
+function AttackSakuya() {
+  image(attackSakuya[currentFrame]);
 }
 
 function draw() {
