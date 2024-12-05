@@ -49,31 +49,21 @@ function SpawnSakuya() {
   }
 
   // Random Sakuya moving pattern
-  let choice = int(random(5)); // randomize moving
+  let choice = int(random(3)); // randomize moving
 
   if(choice === 0) { // stay still
     eneposX = eneposX;
     eneposY = eneposY;
   }
 
-  if (choice === 1) { // moving forward
-    eneposX = eneposX - 0.4;
-    eneposX = constrain(eneposX, width*0.6, width*0.9);
-  }
-
-  if (choice === 2) { // moving backward
-    eneposX = eneposX + 0.4;
-    eneposX = constrain(eneposX, width*0.6, width*0.9);
-  }
-
-  if (choice === 3) { // moving up
+  if (choice === 1) { // moving up
     eneposY = eneposY - 0.5;
-    eneposY = constrain(eneposY, height*0.2, height*0.5);
+    eneposY = constrain(eneposY, height*0.3, height*0.4);
   }
 
-  if (choice === 4) { // moving down
+  if (choice === 2) { // moving down
     eneposY = eneposY + 0.5;
-    eneposY = constrain(eneposY, height*0.2, height*0.5);
+    eneposY = constrain(eneposY, height*0.3, height*0.4);
   }
 }
 
