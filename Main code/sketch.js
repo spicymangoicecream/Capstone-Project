@@ -10,17 +10,23 @@ let currentFrame = 0;
 
 let eneposX, eneposY;
 
+// Bullet Pos Varible
+let bulletX = 0;
+let bulletY = 0;
+
 // Array holding Idle and Moving animation for Sakuya
 let idleSakuya = [];
 let attackSakuya = [];
 
 function preload() {
+  menu = loadImage("assets/menu/reimu-menu.jpg");
   bg = loadImage("assets/background/mansion-battle.gif");
+  // Load Idle animation for Sakuya
   for (i = 1; i <= 6; i++) {
     idleSakuya[i-1] = loadImage("assets/sakuyaAnimation/Sakuya-Idle" + i + ".png");
   }
 
-  // Load Attack Animation 
+  // Load Attack Animation for Sakuya 
   for (i = 1; i <=7; i++) {
     attackSakuya[i-1] = loadImage("assets/sakuyaNormal/sakuyaAtk" + i + ".png");
   }
@@ -28,13 +34,35 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, 1000);
-  eneposX = width*3/4;
+  eneposX = width + 80;
   eneposY = height*2/5;
 }
 
-// class Bullet {
-//   constructor(x, y)
-// }
+function draw() {
+
+  if (start === false) {
+    background(menu);
+  }
+
+  else{
+    background(bg);
+    SpawnSakuya();
+  }
+}
+
+function mousePressed() {
+  start = true;
+}
+
+function keyPressed() {
+}
+
+class Bullet {
+   constructor(x, y, colour) {
+    this.x = x;
+    this.y = y;
+   }
+}
 
 function SpawnSakuya() {
   // Sakuya Idle Animation
@@ -46,6 +74,11 @@ function SpawnSakuya() {
   
   if (currentFrame > 5) {
     currentFrame = 0;
+  }
+
+  // Sakuya Moving In
+  if (start === true && eneposX > width*0.76) {
+    eneposX = eneposX - 1;
   }
 
   // Random Sakuya moving pattern
@@ -71,12 +104,6 @@ function AttackSakuya() {
   image(attackSakuya[currentFrame]);
 }
 
-function draw() {
-  background(bg);
-  SpawnSakuya();
-  
-
-}
 
 // function Reimu() {
 
