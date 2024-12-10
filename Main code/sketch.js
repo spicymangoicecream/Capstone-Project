@@ -4,6 +4,8 @@
 
 let start = false;
 
+let fadeAmount = 255;
+
 let pattern = 0; // use to store pattern initialize number for the boss 
 let bg;
 let currentFrame = 0;
@@ -19,8 +21,10 @@ let idleSakuya = [];
 let attackSakuya = [];
 
 function preload() {
+  //Load Menu and battle stage background
   menu = loadImage("assets/menu/reimu-menu.jpg");
   bg = loadImage("assets/background/mansion-battle.gif");
+
   // Load Idle animation for Sakuya
   for (i = 1; i <= 6; i++) {
     idleSakuya[i-1] = loadImage("assets/sakuyaAnimation/Sakuya-Idle" + i + ".png");
@@ -30,10 +34,13 @@ function preload() {
   for (i = 1; i <=7; i++) {
     attackSakuya[i-1] = loadImage("assets/sakuyaNormal/sakuyaAtk" + i + ".png");
   }
+
+  // Load Custom Font
+  normalFonts = loadFont("assets/fonts/Harukaze.otf");
 }
 
 function setup() {
-  createCanvas(windowWidth, 1000);
+  createCanvas(windowWidth, windowHeight);
   eneposX = width + 80;
   eneposY = height*2/5;
 }
@@ -42,19 +49,28 @@ function draw() {
 
   if (start === false) {
     background(menu);
+
+    fill(255);
+    textFont(normalFonts);
+    textSize(150);
+    text("Touhou Chamber of Phantasm", 30, height*0.2);
   }
 
   else{
-    background(bg);
+    background(bg); 
+
+    fadeAmount = fadeAmount - 3; // Fading Animation start of code
+    tint(255,fadeAmount);
+    
+    background(menu);
+    tint(255,255); // Fading Animation end of code
+
     SpawnSakuya();
   }
 }
 
 function mousePressed() {
   start = true;
-}
-
-function keyPressed() {
 }
 
 class Bullet {
@@ -77,8 +93,8 @@ function SpawnSakuya() {
   }
 
   // Sakuya Moving In
-  if (start === true && eneposX > width*0.76) {
-    eneposX = eneposX - 1;
+  if (start === true && eneposX > width*0.78) {
+    eneposX = eneposX - 1.5;
   }
 
   // Random Sakuya moving pattern
@@ -91,12 +107,12 @@ function SpawnSakuya() {
 
   if (choice === 1) { // moving up
     eneposY = eneposY - 0.5;
-    eneposY = constrain(eneposY, height*0.3, height*0.4);
+    eneposY = constrain(eneposY, height*0.35, height*0.4);
   }
 
   if (choice === 2) { // moving down
     eneposY = eneposY + 0.5;
-    eneposY = constrain(eneposY, height*0.3, height*0.4);
+    eneposY = constrain(eneposY, height*0.35, height*0.4);
   }
 }
 
