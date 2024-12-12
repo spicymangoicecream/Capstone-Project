@@ -20,6 +20,8 @@ let bulletY = 0;
 let idleSakuya = [];
 let attackSakuya = [];
 
+//----------------------------------------------------------------------------------------------------------
+
 function preload() {
   //Load Menu and battle stage background
   menu = loadImage("assets/menu/reimu-menu.jpg");
@@ -36,8 +38,10 @@ function preload() {
   }
 
   // Load Custom Font
-  normalFonts = loadFont("assets/fonts/Harukaze.otf");
+  normalFonts = loadFont("assets/fonts/Harukaze.ttf");
 }
+
+//-----------------------------------------------------------------------------------------------------------
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -45,15 +49,28 @@ function setup() {
   eneposY = height*2/5;
 }
 
+//-----------------------------------------------------------------------------------------------------------
+
 function draw() {
 
   if (start === false) {
     background(menu);
 
+
+    let txtsize = 150;
     fill(255);
     textFont(normalFonts);
     textSize(150);
-    text("Touhou Chamber of Phantasm", 30, height*0.2);
+    text("Touhou Chamber of Phantasm", 600, height*0.2);
+
+    if (mouseX > 850 && mouseX < 1100 && mouseY > 600 && mouseY < 750) {
+      txtsize = txtsize + 20;
+    }
+    textAlign(CENTER);
+    textSize(txtsize);
+    text("Start", width/2, height*3/4);
+    
+
   }
 
   else{
@@ -69,16 +86,24 @@ function draw() {
   }
 }
 
+//----------------------------------------------------------------------------------------------------------
+
 function mousePressed() {
-  start = true;
+  if (mouseX > 850 && mouseX < 1100 && mouseY > 600 && mouseY < 750) {
+    start = true;
+  }
 }
 
+//----------------------------------------------------------------------------------------------------------
+
 class Bullet {
-   constructor(x, y, colour) {
+  constructor(x, y, colour) {
     this.x = x;
     this.y = y;
-   }
+  }
 }
+
+//---------------------------------------------------------------------------------------------------------
 
 function SpawnSakuya() {
   // Sakuya Idle Animation
@@ -120,6 +145,7 @@ function AttackSakuya() {
   image(attackSakuya[currentFrame]);
 }
 
+//----------------------------------------------------------------------------------------------------------
 
 // function Reimu() {
 
