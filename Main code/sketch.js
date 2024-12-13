@@ -44,7 +44,7 @@ function preload() {
 //-----------------------------------------------------------------------------------------------------------
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight); 
   eneposX = width + 80;
   eneposY = height*2/5;
 }
@@ -56,14 +56,16 @@ function draw() {
   if (start === false) {
     background(menu);
 
-
+    // Tilte Screen
     let txtsize = 150;
     fill(255);
     textFont(normalFonts);
     textSize(150);
     text("Touhou Chamber of Phantasm", 600, height*0.2);
 
-    if (mouseX > 850 && mouseX < 1100 && mouseY > 600 && mouseY < 750) {
+
+    // Start Menu 
+    if (mouseX > width*0.37 && mouseX < width*0.63 && mouseY > height*0.6 && mouseY < height*0.8) {
       txtsize = txtsize + 20;
     }
     textAlign(CENTER);
@@ -89,7 +91,7 @@ function draw() {
 //----------------------------------------------------------------------------------------------------------
 
 function mousePressed() {
-  if (mouseX > 850 && mouseX < 1100 && mouseY > 600 && mouseY < 750) {
+  if (mouseX > width*0.37 && mouseX < width*0.63 && mouseY > height*0.6 && mouseY < height*0.8) {
     start = true;
   }
 }
