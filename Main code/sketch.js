@@ -10,7 +10,11 @@ let pattern = 0; // use to store pattern initialize number for the boss
 let bg;
 let currentFrame = 0;
 
+let currentFrame2 = 0;
+
 let eneposX, eneposY;
+
+let userposX, userposY;
 
 // Bullet Pos Varible
 let bulletX = 0;
@@ -19,6 +23,9 @@ let bulletY = 0;
 // Array holding Idle and Moving animation for Sakuya
 let idleSakuya = [];
 let attackSakuya = [];
+
+//Array holding Reimu Animation 
+let idleReimu = [];
 
 //----------------------------------------------------------------------------------------------------------
 
@@ -39,6 +46,13 @@ function preload() {
 
   // Load Custom Font
   normalFonts = loadFont("assets/fonts/Harukaze.ttf");
+
+  //----------------------
+
+  //Reimu Idle Animation 
+  for (i = 1; i <=11; i++) {
+    idleReimu[i-1] = loadImage("assets/reimuAnimation/reimu-idle" + i + ".png");
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -47,6 +61,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight); 
   eneposX = width + 80;
   eneposY = height*2/5;
+
+  userposX = 0 - 80;
+  userposY = height*2/5;
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -149,6 +166,14 @@ function AttackSakuya() {
 
 //----------------------------------------------------------------------------------------------------------
 
-// function Reimu() {
+function ReimuIdle() {
+  image(idleReimu[currentFrame2], userposX, userposY, 80, 160);
 
-// }
+  if (currentFrame2 % 12) {
+    currentFrame2++;
+  }
+
+  if (currentFrame2 > 10) {
+    currentFrame2 = 0;
+  }
+}
