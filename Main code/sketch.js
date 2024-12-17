@@ -33,14 +33,15 @@ function preload() {
   //Load Menu and battle stage background
   menu = loadImage("assets/menu/reimu-menu.jpg");
   bg = loadImage("assets/background/mansion-battle.gif");
+  music = loadSound("assets/battletheme/Night of Nights.mp3");
 
   // Load Idle animation for Sakuya
-  for (i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 6; i++) {
     idleSakuya[i-1] = loadImage("assets/sakuyaAnimation/Sakuya-Idle" + i + ".png");
   }
 
   // Load Attack Animation for Sakuya 
-  for (i = 1; i <=7; i++) {
+  for (let i = 1; i <=7; i++) {
     attackSakuya[i-1] = loadImage("assets/sakuyaNormal/sakuyaAtk" + i + ".png");
   }
 
@@ -50,7 +51,7 @@ function preload() {
   //----------------------
 
   //Reimu Idle Animation 
-  for (i = 1; i <=11; i++) {
+  for (let i = 1; i <=11; i++) {
     idleReimu[i-1] = loadImage("assets/reimuAnimation/reimu-idle" + i + ".png");
   }
 }
@@ -101,7 +102,10 @@ function draw() {
     background(menu);
     tint(255,255); // Fading Animation end of code
 
+    // ReimuIdle();
+    
     SpawnSakuya();
+    
   }
 }
 
@@ -110,6 +114,11 @@ function draw() {
 function mousePressed() {
   if (mouseX > width*0.37 && mouseX < width*0.63 && mouseY > height*0.6 && mouseY < height*0.8) {
     start = true;
+  }
+
+  if(start === true) {
+    music.setVolume(0.1);
+    music.loop();
   }
 }
 
