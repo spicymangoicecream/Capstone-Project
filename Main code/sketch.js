@@ -3,6 +3,7 @@
 // 11.28.2024
 
 let start = false;
+let msplayed = false;
 
 let fadeAmount = 255;
 
@@ -102,7 +103,7 @@ function draw() {
     background(menu);
     tint(255,255); // Fading Animation end of code
 
-    // ReimuIdle();
+    ReimuIdle();
     
     SpawnSakuya();
     
@@ -114,11 +115,10 @@ function draw() {
 function mousePressed() {
   if (mouseX > width*0.37 && mouseX < width*0.63 && mouseY > height*0.6 && mouseY < height*0.8) {
     start = true;
-  }
-
-  if(start === true) {
-    music.setVolume(0.1);
-    music.loop();
+    if(start === true && msplayed === false) {
+      music.setVolume(0.1); msplayed = true;
+      music.loop();
+    }
   }
 }
 
@@ -160,12 +160,12 @@ function SpawnSakuya() {
 
   if (choice === 1) { // moving up
     eneposY = eneposY - 0.5;
-    eneposY = constrain(eneposY, height*0.35, height*0.4);
+    eneposY = constrain(eneposY, height*0.37, height*0.4);
   }
 
   if (choice === 2) { // moving down
     eneposY = eneposY + 0.5;
-    eneposY = constrain(eneposY, height*0.35, height*0.4);
+    eneposY = constrain(eneposY, height*0.37, height*0.4);
   }
 }
 
@@ -176,13 +176,34 @@ function AttackSakuya() {
 //----------------------------------------------------------------------------------------------------------
 
 function ReimuIdle() {
-  image(idleReimu[currentFrame2], userposX, userposY, 80, 160);
+  image(idleReimu[currentFrame2], userposX, userposY, 130, 160);
 
-  if (currentFrame2 % 12) {
+  if (frameCount % 11 === 0) {
     currentFrame2++;
   }
 
   if (currentFrame2 > 10) {
     currentFrame2 = 0;
+  }
+
+  if (start === true && userposX < width*0.16) {
+    userposX = userposX + 1.5;
+  }
+  // Reimu Flying movement mimicking
+  let choice2 = int(random(3)); // randomize moving
+
+  if(choice2 === 0) { // stay still
+    userposX = userposX;
+    userposY = userposY;
+  }
+
+  if (choice2 === 1) { // moving up
+    userposY = userposY - 0.5;
+    userposY = constrain(userposY, height*0.37, height*0.4);
+  }
+
+  if (choice2 === 2) { // moving down
+    userposY = userposY + 0.5;
+    userposY = constrain(userposY, height*0.37, height*0.4);
   }
 }
