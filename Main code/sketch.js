@@ -3,6 +3,7 @@
 // 11.28.2024
 
 let start = false;
+let intro = false;
 let msplayed = false;
 
 let fadeAmount = 255;
@@ -115,6 +116,7 @@ function draw() {
 function mousePressed() {
   if (mouseX > width*0.37 && mouseX < width*0.63 && mouseY > height*0.6 && mouseY < height*0.8) {
     start = true;
+    intro = true;
     if(start === true && msplayed === false) {
       music.setVolume(0.1); msplayed = true;
       music.loop();
@@ -186,9 +188,13 @@ function ReimuIdle() {
     currentFrame2 = 0;
   }
 
-  if (start === true && userposX < width*0.16) {
+  if (intro === true && userposX < width*0.16) {
     userposX = userposX + 1.5;
+    if (userposX >= width*0.16) {
+      intro = false;
+    }
   }
+
   // Reimu Flying movement mimicking
   let choice2 = int(random(3)); // randomize moving
 
@@ -205,5 +211,25 @@ function ReimuIdle() {
   if (choice2 === 2) { // moving down
     userposY = userposY + 0.5;
     userposY = constrain(userposY, height*0.37, height*0.4);
+  }
+}
+
+function keyPressed() {
+  print("keypress")
+  if (keyCode === 87) {
+    userposY = userposY++;
+  }
+
+  if (keyCode === 83) {
+    userposY = userposY--;
+  }
+
+  if (keyCode === 65) {
+    userposX = userposX-10;
+    print("lEFT")
+  }
+
+  if (keyCode === 68) {
+    userposX = userposX+10;
   }
 }
