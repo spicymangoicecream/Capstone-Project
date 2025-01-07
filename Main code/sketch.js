@@ -2,7 +2,7 @@
 // Henry Vu
 // 11.28.2024
 
-let start = false;
+let start = false; // store to tell the programs to start menu 
 let intro = false;
 
 let msplayed = false;
@@ -11,17 +11,17 @@ let fadeAmount = 255;
 
 let pattern = 0; // use to store pattern initialize number for the boss 
 let bg;
-let currentFrame = 0;
 
+let currentFrame = 0;
 let currentFrame2 = 0;
 
 // Core moflying and pos variable for enemy 
 let eneposX, eneposY;
-let coreX, coreY;
+let eoffsetX, eoffsetY;
 
 // Core Flying movement and pos variable for user 
 let userposX, userposY;
-let usercoreX, usercoreY;
+let uoffsetX, uoffsetY;
 
 // Bullet Pos Varible
 let bulletX = 0;
@@ -33,6 +33,9 @@ let attackSakuya = [];
 
 //Array holding Reimu Animation 
 let idleReimu = [];
+
+// create UI to display player health and times
+let ui_height = height*0.16;
 
 //----------------------------------------------------------------------------------------------------------
 
@@ -110,6 +113,7 @@ function draw() {
     tint(255,255); // Fading Animation end of code
 
     ReimuIdle();
+    userInput();
     
     SpawnSakuya();
     
@@ -142,7 +146,7 @@ class Bullet {
 
 function SpawnSakuya() {
   // Sakuya Idle Animation
-  image(idleSakuya[currentFrame], eneposX, eneposY,80, 160);
+  image(idleSakuya[currentFrame], eneposX, eneposY+eoffsetY,55, 110);
 
   if (frameCount % 12 === 0) {
     currentFrame++;
@@ -158,22 +162,7 @@ function SpawnSakuya() {
   }
 
   // Random Sakuya moving pattern
-  let choice = int(random(3)); // randomize moving
-
-  if(choice === 0) { // stay still
-    eneposX = eneposX;
-    eneposY = eneposY;
-  }
-
-  if (choice === 1) { // moving up
-    eneposY = eneposY - 0.5;
-    eneposY = constrain(eneposY, height*0.37, height*0.4);
-  }
-
-  if (choice === 2) { // moving down
-    eneposY = eneposY + 0.5;
-    eneposY = constrain(eneposY, height*0.37, height*0.4);
-  }
+  eoffsetY = sin(frameCount/100)*10;
 }
 
 function AttackSakuya() {
@@ -183,7 +172,7 @@ function AttackSakuya() {
 //----------------------------------------------------------------------------------------------------------
 
 function ReimuIdle() {
-  image(idleReimu[currentFrame2], userposX, userposY, 130, 160);
+  image(idleReimu[currentFrame2], userposX, userposY+uoffsetY, 90, 110);
 
   if (frameCount % 11 === 0) {
     currentFrame2++;
@@ -201,38 +190,23 @@ function ReimuIdle() {
   }
 
   // Reimu Flying movement mimicking
-  let choice2 = int(random(3)); // randomize moving
-
-  if(choice2 === 0) { // stay still
-    userposX = userposX;
-    userposY = userposY;
-  }
-
-  if (choice2 === 1) { // moving up
-    userposY = userposY - 0.5;
-    userposY = constrain(userposY, height*0.37, height*0.4);
-  }
-
-  if (choice2 === 2) { // moving down
-    userposY = userposY + 0.5;
-    userposY = constrain(userposY, height*0.37, height*0.4);
-  }
+  uoffsetY = sin(frameCount/90)*10;
 }
 
-function keyPressed() {
-  if (keyCode === 87) {
-    userposY = userposY++;
+function userInput() {
+  if (keyIsDown(87) === true && intro === false) {
+    userposY = userposY-5;
   }
 
-  if (keyCode === 83) {
-    userposY = userposY--;
+  if (keyIsDown(83) === true && intro === false) {
+    userposY = userposY+5;
   }
 
-  if (keyCode === 65) {
-    userposX = userposX-10;
+  if (keyIsDown(65) === true && intro === false) {
+    userposX = userposX-5;
   }
 
-  if (keyCode === 68) {
-    userposX = userposX+10;
+  if (keyIsDown(68) === true && intro === false) {
+    userposX = userposX+5;
   }
 }
