@@ -4,6 +4,7 @@
 
 let start = false;
 let intro = false;
+
 let msplayed = false;
 
 let fadeAmount = 255;
@@ -14,9 +15,13 @@ let currentFrame = 0;
 
 let currentFrame2 = 0;
 
+// Core moflying and pos variable for enemy 
 let eneposX, eneposY;
+let coreX, coreY;
 
+// Core Flying movement and pos variable for user 
 let userposX, userposY;
+let usercoreX, usercoreY;
 
 // Bullet Pos Varible
 let bulletX = 0;
@@ -215,7 +220,6 @@ function ReimuIdle() {
 }
 
 function keyPressed() {
-  print("keypress")
   if (keyCode === 87) {
     userposY = userposY++;
   }
@@ -226,7 +230,6 @@ function keyPressed() {
 
   if (keyCode === 65) {
     userposX = userposX-10;
-    print("lEFT")
   }
 
   if (keyCode === 68) {
