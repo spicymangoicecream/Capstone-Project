@@ -15,6 +15,7 @@ let bg;
 let currentFrame = 0;
 let currentFrame2 = 0;
 
+
 // Core moflying and pos variable for enemy 
 let eneposX, eneposY;
 let eoffsetX, eoffsetY;
@@ -35,7 +36,8 @@ let attackSakuya = [];
 let idleReimu = [];
 
 // create UI to display player health and times
-let ui_height = height*0.16;
+let ui_y;
+let ui_x;
 
 //----------------------------------------------------------------------------------------------------------
 
@@ -44,6 +46,8 @@ function preload() {
   menu = loadImage("assets/menu/reimu-menu.jpg");
   bg = loadImage("assets/background/mansion-battle.gif");
   music = loadSound("assets/battletheme/Night of Nights.mp3");
+  sfx = loadSound("assets/sfx/button-pressed-38129.mp3");
+  swipeSound = loadSound("assets/sfx/swipe-236674.mp3");
 
   // Load Idle animation for Sakuya
   for (let i = 1; i <= 6; i++) {
@@ -75,12 +79,14 @@ function setup() {
 
   userposX = 0 - 80;
   userposY = height*2/5;
+
+  ui_x = width*0.3;
+  ui_y = height*0.4;
 }
 
 //-----------------------------------------------------------------------------------------------------------
 
 function draw() {
-
   if (start === false) {
     background(menu);
 
@@ -110,6 +116,11 @@ function draw() {
     tint(255,fadeAmount);
     
     background(menu);
+
+    if (fadeAmount < 5) {
+      rect(ui_x, ui_y, 200, 500);
+    }
+
     tint(255,255); // Fading Animation end of code
 
     ReimuIdle();
@@ -124,10 +135,15 @@ function draw() {
 
 function mousePressed() {
   if (mouseX > width*0.37 && mouseX < width*0.63 && mouseY > height*0.6 && mouseY < height*0.8) {
+    if (start === false) {
+      sfx.play();
+    }
+
     start = true;
     intro = true;
+    
     if(start === true && msplayed === false) {
-      music.setVolume(0.1); msplayed = true;
+      music.setVolume(0.5); msplayed = true;
       music.loop();
     }
   }
