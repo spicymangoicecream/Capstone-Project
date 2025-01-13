@@ -15,8 +15,12 @@ let bg;
 let currentFrame = 0;
 let currentFrame2 = 0;
 
+let healthBar = 3;
 
-// Core moflying and pos variable for enemy 
+let time = 120;
+let startTime;
+
+// Core Flying and pos variable for enemy 
 let eneposX, eneposY;
 let eoffsetX, eoffsetY;
 
@@ -39,7 +43,7 @@ let idleReimu = [];
 let ui_y;
 let ui_x;
 
-//----------------------------------------------------------------------------------------------------------
+//PRELOAD----------------------------------------------------------------------------------------------------------
 
 function preload() {
   //Load Menu and battle stage background
@@ -70,7 +74,7 @@ function preload() {
   }
 }
 
-//-----------------------------------------------------------------------------------------------------------
+//SET UP-----------------------------------------------------------------------------------------------------------
 
 function setup() {
   createCanvas(windowWidth, windowHeight); 
@@ -80,11 +84,11 @@ function setup() {
   userposX = 0 - 80;
   userposY = height*2/5;
 
-  ui_x = width*0.3;
-  ui_y = height*0.4;
+  ui_x = width*0;
+  ui_y = height*0.9;
 }
 
-//-----------------------------------------------------------------------------------------------------------
+//ALL FUNCTION-----------------------------------------------------------------------------------------------------------
 
 function draw() {
   if (start === false) {
@@ -118,20 +122,21 @@ function draw() {
     background(menu);
 
     if (fadeAmount < 5) {
-      rect(ui_x, ui_y, 200, 500);
+      rect(ui_x, ui_y, width, height*0.2); fill(255,0,0);
+
     }
 
     tint(255,255); // Fading Animation end of code
 
     ReimuIdle();
     userInput();
-    
+    Counter();
     SpawnSakuya();
     
   }
 }
 
-//----------------------------------------------------------------------------------------------------------
+//Input Start Menu----------------------------------------------------------------------------------------------------------
 
 function mousePressed() {
   if (mouseX > width*0.37 && mouseX < width*0.63 && mouseY > height*0.6 && mouseY < height*0.8) {
@@ -149,7 +154,14 @@ function mousePressed() {
   }
 }
 
-//----------------------------------------------------------------------------------------------------------
+//Time Counter----------------------------------------------------------------------------------------------------------
+
+function Counter() {
+  let elasp = int((millis() - startTime)/1000);
+  console.log(elasp);
+}
+
+//Bullet Class----------------------------------------------------------------------------------------------------------
 
 class Bullet {
   constructor(x, y, colour) {
@@ -158,7 +170,7 @@ class Bullet {
   }
 }
 
-//---------------------------------------------------------------------------------------------------------
+//Sakuya Function---------------------------------------------------------------------------------------------------------
 
 function SpawnSakuya() {
   // Sakuya Idle Animation
@@ -185,7 +197,7 @@ function AttackSakuya() {
   image(attackSakuya[currentFrame]);
 }
 
-//----------------------------------------------------------------------------------------------------------
+//Reimu Function----------------------------------------------------------------------------------------------------------
 
 function ReimuIdle() {
   image(idleReimu[currentFrame2], userposX, userposY+uoffsetY, 90, 110);
@@ -202,6 +214,7 @@ function ReimuIdle() {
     userposX = userposX + 1.5;
     if (userposX >= width*0.16) {
       intro = false;
+      startTime = millis();
     }
   }
 
@@ -209,20 +222,34 @@ function ReimuIdle() {
   uoffsetY = sin(frameCount/90)*10;
 }
 
+//User Control-------------------------------------------------------------------------------------------------------------
+
 function userInput() {
   if (keyIsDown(87) === true && intro === false) {
     userposY = userposY-5;
+    if (userposY+uoffsetY < height*0) {
+      userposY = height*0;
+    }
   }
 
   if (keyIsDown(83) === true && intro === false) {
     userposY = userposY+5;
+    if (userposY+uoffsetY > height*0.78) {
+      userposY = height*0.78;
+    }
   }
 
   if (keyIsDown(65) === true && intro === false) {
     userposX = userposX-5;
+    if (userposX < width*0) {
+      userposX = 0;
+    }
   }
 
   if (keyIsDown(68) === true && intro === false) {
     userposX = userposX+5;
+    if (userposX > width*0.9) {
+      userposX = width*0.9;
+    }
   }
 }
