@@ -161,15 +161,6 @@ function Counter() {
   console.log(elasp);
 }
 
-//Bullet Class----------------------------------------------------------------------------------------------------------
-
-class Bullet {
-  constructor(x, y, colour) {
-    this.x = x;
-    this.y = y;
-  }
-}
-
 //Sakuya Function---------------------------------------------------------------------------------------------------------
 
 function SpawnSakuya() {
