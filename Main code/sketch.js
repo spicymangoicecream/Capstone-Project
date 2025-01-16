@@ -53,6 +53,9 @@ function preload() {
   sfx = loadSound("assets/sfx/button-pressed-38129.mp3");
   swipeSound = loadSound("assets/sfx/swipe-236674.mp3");
 
+  //Bullet Image
+  
+
   // Load Idle animation for Sakuya
   for (let i = 1; i <= 6; i++) {
     idleSakuya[i-1] = loadImage("assets/sakuyaAnimation/Sakuya-Idle" + i + ".png");
