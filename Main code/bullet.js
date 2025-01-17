@@ -1,6 +1,8 @@
 // File for Bullet Code
 let bulletObject = [];
-let isResting = false; 
+let angleOffset = 0; // make bullet pattern spinning
+let patternType = 'radial';
+let numBullet = 
 
 class bullet {
   constructor(x,y,angle,speed) {
@@ -15,3 +17,6 @@ class bullet {
   
 }
 
+function pickRandomPattern() {
+  let patterns = ['spiral', 'radial', '']
+}
