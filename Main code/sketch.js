@@ -12,6 +12,8 @@ let fadeAmount = 255;
 let pattern = 0; // use to store pattern initialize number for the boss 
 let bg;
 
+let elasp;
+
 let currentFrame = 0;
 let currentFrame2 = 0;
 
@@ -19,6 +21,7 @@ let healthBar = 3;
 
 let time = 120;
 let startTime;
+let timeLeft;
 
 // Core Flying and pos variable for enemy 
 let eneposX, eneposY;
@@ -42,6 +45,8 @@ let idleReimu = [];
 // create UI to display player health and times
 let ui_y;
 let ui_x;
+
+// 
 
 //PRELOAD----------------------------------------------------------------------------------------------------------
 
@@ -124,20 +129,29 @@ function draw() {
     
     background(menu);
 
-    if (fadeAmount < 5) {
-      rect(ui_x, ui_y, width, height*0.2); fill(255,0,0);
-
-    }
-
     tint(255,255); // Fading Animation end of code
 
     ReimuIdle();
+
     userInput();
+
+    for (let i = 0; i < bullets.length; i++) {
+      bullets[i].update();
+      bullets[i].display();
+    }
+
+    if (intro === false && timeLeft <= 117) {
+      PatternSpiral();
+    }
+
     Counter();
     SpawnSakuya();
     
   }
 }
+
+//Bullet Function----------------------------------------------------------------------------------------------------------
+
 
 //Input Start Menu----------------------------------------------------------------------------------------------------------
 
@@ -160,8 +174,9 @@ function mousePressed() {
 //Time Counter----------------------------------------------------------------------------------------------------------
 
 function Counter() {
-  let elasp = int((millis() - startTime)/1000);
-  console.log(elasp);
+  elasp = int((millis() - startTime)/1000);
+  timeLeft = time - elasp;
+  console.log(timeLeft);
 }
 
 //Sakuya Function---------------------------------------------------------------------------------------------------------
