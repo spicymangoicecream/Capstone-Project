@@ -138,12 +138,14 @@ function draw() {
     for (let i = 0; i < bullets.length; i++) {
       bullets[i].update();
       bullets[i].display();
+      if (bullets[i].offScreen()) {
+        bullets.splice(i,1);
+      }
     }
 
     if (intro === false && timeLeft <= 117) {
       PatternSpiral();
     }
-
     Counter();
     SpawnSakuya();
     
@@ -209,7 +211,7 @@ function AttackSakuya() {
 //Reimu Function----------------------------------------------------------------------------------------------------------
 
 function ReimuIdle() {
-  image(idleReimu[currentFrame2], userposX, userposY+uoffsetY, 90, 110);
+  image(idleReimu[currentFrame2], userposX, userposY+uoffsetY, 70, 80);
 
   if (frameCount % 11 === 0) {
     currentFrame2++;
@@ -235,28 +237,28 @@ function ReimuIdle() {
 
 function userInput() {
   if (keyIsDown(87) === true && intro === false) {
-    userposY = userposY-5;
+    userposY = userposY-2;
     if (userposY+uoffsetY < height*0) {
       userposY = height*0;
     }
   }
 
   if (keyIsDown(83) === true && intro === false) {
-    userposY = userposY+5;
+    userposY = userposY+2;
     if (userposY+uoffsetY > height*0.78) {
       userposY = height*0.78;
     }
   }
 
   if (keyIsDown(65) === true && intro === false) {
-    userposX = userposX-5;
+    userposX = userposX-2;
     if (userposX < width*0) {
       userposX = 0;
     }
   }
 
   if (keyIsDown(68) === true && intro === false) {
-    userposX = userposX+5;
+    userposX = userposX+2;
     if (userposX > width*0.9) {
       userposX = width*0.9;
     }
