@@ -1,7 +1,8 @@
 // File for Bullet Code
 let bullets = []; // make bullet pattern spinning
 let patternType = 'radial';
-let numBullet = 30;
+let numsBullet;
+let radialAngle = 0;
 
 class Bullet {
   constructor(x, y, speed, angle) {
@@ -20,8 +21,8 @@ class Bullet {
   }
 
   display() {
-    fill(77, 77, 255);
-    ellipse(this.x + 10, this.y + 10, 10, 5);
+    fill(255);
+    ellipse(this.x, this.y, 10, 5);
   }
 
   offScreen() {
@@ -43,10 +44,22 @@ function pickRandomPattern() {
 
 function PatternSpiral() {
   if (frameCount % 5 === 0) {
-    this.speed = 1;
-    this.angleOffset = 0.03;
-    this.angle = this.angle - this.angleOffset;
-    bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, frameCount % TWO_PI * 2));
-    // bullets.push(new Bullet (eneposX+25, eneposY+25,));
+    this.speed = 2;
+    this.angle = frameCount % TWO_PI*2;
+    bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, this.angle));
+  }
+}
+
+function PatternRadial() {
+  if (frameCount % 10 === 0) {
+    this.speed = 3;
+    let numsBullet = 20;
+
+    for(let i = 0; i < numsBullet; i++) {
+      this.angle = (TWO_PI/numsBullet) * i;
+      this.x += 0.03;
+      this.y += 0.03;
+      bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, this.angle));
+    }
   }
 }

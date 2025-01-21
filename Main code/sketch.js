@@ -144,7 +144,8 @@ function draw() {
     }
 
     if (intro === false && timeLeft <= 117) {
-      PatternSpiral();
+      // PatternSpiral();
+      PatternRadial();
     }
     Counter();
     SpawnSakuya();
