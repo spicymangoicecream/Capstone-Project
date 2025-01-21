@@ -5,11 +5,12 @@
 let start = false; // store to tell the programs to start menu 
 let intro = false;
 
+let changeTime = 10;
+
 let msplayed = false;
 
 let fadeAmount = 255;
 
-let pattern = 0; // use to store pattern initialize number for the boss 
 let bg;
 
 let elasp;
@@ -20,7 +21,7 @@ let currentFrame2 = 0;
 let healthBar = 3;
 
 let time = 120;
-let startTime;
+let currentTime;
 let timeLeft;
 
 // Core Flying and pos variable for enemy 
@@ -86,6 +87,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight); 
+  pickRandomPattern();
   eneposX = width + 80;
   eneposY = height*2/5;
 
@@ -135,26 +137,27 @@ function draw() {
 
     userInput();
 
-    for (let i = 0; i < bullets.length; i++) {
-      bullets[i].update();
-      bullets[i].display();
-      if (bullets[i].offScreen()) {
-        bullets.splice(i,1);
-      }
-    }
+    Counter();
+
+    SpawnSakuya();
 
     if (intro === false && timeLeft <= 117) {
-      // PatternSpiral();
-      PatternRadial();
-    }
-    Counter();
-    SpawnSakuya();
-    
+      ChangePattern();
+      if (patternType === 'spiral') {
+        PatternSpiral();
+      }
+
+      if (patternType === 'radial') {
+        PatternRadial();
+      }
+
+      if (patternType === 'wave') {
+        PatternWave();
+      }
+      updateBullet();
+    } 
   }
 }
-
-//Bullet Function----------------------------------------------------------------------------------------------------------
-
 
 //Input Start Menu----------------------------------------------------------------------------------------------------------
 
@@ -177,7 +180,7 @@ function mousePressed() {
 //Time Counter----------------------------------------------------------------------------------------------------------
 
 function Counter() {
-  elasp = int((millis() - startTime)/1000);
+  elasp = int((millis() - currentTime)/1000);
   timeLeft = time - elasp;
   console.log(timeLeft);
 }
@@ -226,7 +229,7 @@ function ReimuIdle() {
     userposX = userposX + 1.5;
     if (userposX >= width*0.16) {
       intro = false;
-      startTime = millis();
+      currentTime = millis();
     }
   }
 

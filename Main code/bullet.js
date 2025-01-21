@@ -4,6 +4,10 @@ let patternType = 'radial';
 let numsBullet;
 let radialAngle = 0;
 
+let patternElasp = 0;
+let lastTimeChange = 0;
+let IntTime = 15000;
+
 class Bullet {
   constructor(x, y, speed, angle) {
     this.x = x;
@@ -22,7 +26,7 @@ class Bullet {
 
   display() {
     fill(255);
-    ellipse(this.x, this.y, 10, 5);
+    ellipse(this.x+ 10, this.y + 10, 10, 5);
   }
 
   offScreen() {
@@ -37,21 +41,29 @@ class Bullet {
 
 function pickRandomPattern() {
   let patterns = ['spiral', 'radial', 'wave'];
-  if (patterns === spiral) {
-    PatternSpiral();
+  patternType = random(patterns);
+  console.log("Changed Pattern to: " + patternType);
+}
+
+function ChangePattern() {
+  let thisTime = millis();
+  patternElasp = thisTime - lastTimeChange;
+
+  if (patternElasp > IntTime) {
+    pickRandomPattern();
+    lastTimeChange = thisTime;
   }
 }
 
 function PatternSpiral() {
-  if (frameCount % 5 === 0) {
-    this.speed = 2;
-    this.angle = frameCount % TWO_PI*2;
-    bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, this.angle));
+  if (frameCount % 1 === 0) { 
+    this.speed = 5;
+    bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, frameCount % TWO_PI * 2));
   }
 }
 
 function PatternRadial() {
-  if (frameCount % 10 === 0) {
+  if (frameCount % 20 === 0) {
     this.speed = 3;
     let numsBullet = 20;
 
@@ -60,6 +72,29 @@ function PatternRadial() {
       this.x += 0.03;
       this.y += 0.03;
       bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, this.angle));
+    }
+  }
+}
+
+function PatternWave() {
+  if (frameCount % 10 === 0) {
+    this.speed = 3;
+    let numsBullet = 20;
+  
+
+      for (let i = 0; i < numsBullet; i++) {
+      this.angle = sin(frameCount * 0.1) * 2 + (TWO_PI/numsBullet) * i;
+      bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, this.angle));
+    }
+  }
+}
+
+function updateBullet() {
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+    bullets[i].display();
+    if (bullets[i].offScreen()) {
+      bullets.splice(i,1);
     }
   }
 }
