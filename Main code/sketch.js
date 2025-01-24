@@ -4,6 +4,7 @@
 
 let start = false; // store to tell the programs to start menu 
 let intro = false;
+let gameOver = false;
 
 let changeTime = 10;
 
@@ -133,29 +134,42 @@ function draw() {
 
     tint(255,255); // Fading Animation end of code
 
-    ReimuIdle();
+    if (timeLeft > 0 && gameOver === false) {
+      ReimuIdle();
 
-    userInput();
+      userInput();
 
-    Counter();
+      Counter();
 
-    SpawnSakuya();
+      SpawnSakuya();
 
-    if (intro === false && timeLeft <= 117) {
-      ChangePattern();
-      if (patternType === 'spiral') {
-        PatternSpiral();
-      }
+      if (intro === false && timeLeft <= 117) {
+        ChangePattern();
+        if (patternType === 'spiral') {
+          PatternSpiral();
+        }
 
-      if (patternType === 'radial') {
-        PatternRadial();
-      }
+        if (patternType === 'radial') {
+          PatternRadial();
+        }
 
-      if (patternType === 'wave') {
-        PatternWave();
-      }
-      updateBullet();
-    } 
+        if (patternType === 'wave') {
+          PatternWave();
+        }
+        updateBullet();
+
+        checkCollision();
+      } 
+      checkCollision();
+    }
+
+    else if (timeLeft === 0 && gameOver === false) {
+
+    }
+
+    else if (timeLeft > 0 && gameOver === true) {
+
+    }
   }
 }
 

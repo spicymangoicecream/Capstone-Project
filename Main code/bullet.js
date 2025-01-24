@@ -82,7 +82,7 @@ function PatternWave() {
     let numsBullet = 20;
   
 
-      for (let i = 0; i < numsBullet; i++) {
+    for (let i = 0; i < numsBullet; i++) {
       this.angle = sin(frameCount * 0.1) * 2 + (TWO_PI/numsBullet) * i;
       bullets.push(new Bullet(eneposX + 25, eneposY + 25, this.speed, this.angle));
     }
